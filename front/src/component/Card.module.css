@@ -1,0 +1,92 @@
+/* Card.module.css */
+
+.card {
+  width: 260px; /* 根据需要调整宽度 */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #1a1a1a; /* 暗色背景 */
+  color: #f0f0f0; /* 亮色文字 */
+  margin: 20px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* 添加过渡效果 */
+  cursor: pointer;
+  display: inline-block; /* 使卡片可以并排显示 */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* 鼠标悬停时上移 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影加深 */
+}
+
+.cardImageContainer {
+  width: 100%;
+  height: 200px; /* 图像容器高度 */
+  overflow: hidden;
+  position: relative;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 保持图片比例并覆盖容器 */
+  display: block;
+  transition: transform 0.5s ease-in-out; /* 图片放大过渡 */
+}
+
+.card:hover .cardImage {
+  transform: scale(1.05); /* 鼠标悬停时图片轻微放大 */
+}
+
+.cardContent {
+  padding: 15px;
+}
+
+.cardTitle {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.cardSubtitle {
+  font-size: 0.9em;
+  color: #b0b0b0;
+}
+
+/* 简单的进入动画 (可选，可以使用 React Transition Group 实现更复杂的动画) */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card.appear {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+
+@keyframes carouselRotate {
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+}
+
+/* 应用旋转动画的类 */
+.card.rotating {
+  animation: carouselRotate 2s ease-in-out infinite;
+  opacity: 1; /* 初始透明度 */
+}
