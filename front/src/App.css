@@ -45,10 +45,10 @@
 }
 
 .move{
-  transform: translateY(100px);
+  transform: translateY(200px);
   transition: transform 1s ease-out;
 }
 
 .loaded{
-  transform: translateY(50px);
+  transform: translateY(150px);
 }

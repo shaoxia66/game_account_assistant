@@ -3,17 +3,65 @@ import { Ccard } from './Ccard.js';
 import { Input } from '@lobehub/ui';
 import { Button } from '@lobehub/ui';
 import * as BookOpenCheck from 'lucide-react';
+import { Spin } from '@arco-design/web-react';
+
 
 export const FrostedWindow = ({ set_show_chat }) => {
     const [input_value, set_input_value] = React.useState("");
+    const [card_list, set_card_list] = React.useState([<Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
+                    } title={"账号助手"} subtitle={"账号助手"} />]);
+    // const containerStyle = {
+
+    //     height: '90vh',
+    //     position: 'position',
+    //     top: '1vh',
+    //     left: '30px',
+    //     right: '30px',
+    //     // bottom: '30px',
+    //     borderRadius: '12px',
+    //     backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    //     backdropFilter: 'blur(10px)',
+    //     WebkitBackdropFilter: 'blur(10px)', // 兼容Safari
+    //     boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+    //     border: '1px solid rgba(255, 255, 255, 0.18)',
+    //     overflow: 'hidden',
+    //     zIndex: 9999,
+    // };
+
+    // const contentStyle = {
+    //     padding: '20px',
+    //     height: '100%',
+    //     overflow: 'auto',
+    //     position: 'position',
+    // };
+    // const closeButtonStyle = {
+    //     position: 'position',
+    //     right: '20px',
+    //     top: '20px',
+    //     width: '32px',
+    //     height: '32px',
+    //     borderRadius: '50%',
+    //     background: 'rgba(255, 255, 255, 0.8)',
+    //     border: 'none',
+    //     cursor: 'pointer',
+    //     display: 'flex',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+    //     transition: 'all 0.2s ease',
+    //     ':hover': {
+    //         background: 'rgba(255, 255, 255, 1)',
+    //         transform: 'scale(1.1)'
+    //     }
+    // };
     const containerStyle = {
 
         height: '90vh',
         position: 'fixed',
-        top: '1vh',
+        top: '-100px',
         left: '30px',
         right: '30px',
-        bottom: '30px',
+        bottom: '150px',
         borderRadius: '12px',
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
         backdropFilter: 'blur(10px)',
@@ -49,12 +97,19 @@ export const FrostedWindow = ({ set_show_chat }) => {
             transform: 'scale(1.1)'
         }
     };
-
     return (
         <div style={containerStyle}>
             <div style={contentStyle}>
                 <div className='content' style={{ width: '100%', height: '88%', overflow: 'auto', }}>
-                    {/* <h1 style={{margin:"0px" ,color: '#4368ff', textAlign: 'center' }}>账号助手</h1> */}
+                    <h1 style={{margin:"0px" ,color: '#4368ff', textAlign: 'center' }}>账号助手</h1>
+                    {/* <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
+                    } title={"账号助手"} subtitle={"账号助手"} />
+                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
+                    } title={"账号助手"} subtitle={"账号助手"} />
+                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
+                    } title={"账号助手"} subtitle={"账号助手"} />
+                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
+                    } title={"账号助手"} subtitle={"账号助手"} in_search={false} helf='https://www.pzds.com/goodsDetails/TD2W2X/6' />
                     <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
                     } title={"账号助手"} subtitle={"账号助手"} />
                     <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
@@ -62,27 +117,21 @@ export const FrostedWindow = ({ set_show_chat }) => {
                     <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
                     } title={"账号助手"} subtitle={"账号助手"} />
                     <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} in_search={false} helf='https://www.pzds.com/goodsDetails/TD2W2X/6'/>
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
                     } title={"账号助手"} subtitle={"账号助手"} />
                     <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
+                    } title={"账号助手"} subtitle={"账号助手"} /> */}
+                    {card_list}
                 </div>
+                <Spin dot={true} />
                 <div className='input_box' style={{ width: '100%', height: '10%' }}>
                     <div style={{
-  display: 'flex',
-  alignItems: 'center',       // 垂直居中
-//   justifyContent: 'space-between', // 可选：自动分配间距
-  width: '100%',             // 控制整体宽度
-  gap: '10px'    ,            // 控制两个组件之间的空隙   
-  justifyContent: "center", // 水平居中
-}}>
+                        display: 'flex',
+                        alignItems: 'center',       // 垂直居中
+                        //   justifyContent: 'space-between', // 可选：自动分配间距
+                        width: '100%',             // 控制整体宽度
+                        gap: '10px',            // 控制两个组件之间的空隙   
+                        justifyContent: "center", // 水平居中
+                    }}>
                         <Input
                             type="text"
                             placeholder="简单描述一下你想要你的账号"
@@ -105,19 +154,21 @@ export const FrostedWindow = ({ set_show_chat }) => {
                             variant="solid"
                             icon={BookOpenCheck.BookOpenCheck}
                             style={{
-                               
+
                             }}
                             onClick={() => {
-                                if (input_value  === "") {
+                                if (input_value === "") {
                                     alert("请输入内容");
                                     return;
                                 }
                                 // 发送请求
                                 console.log("正在发送请求...");
                                 set_input_value("");
+                                set_card_list([]);
                             }}
                         > 查询
                         </Button>
+                        
                     </div>
 
                 </div>

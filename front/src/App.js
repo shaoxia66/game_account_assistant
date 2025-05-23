@@ -51,7 +51,7 @@ function App() {
           }} src={bgImage} alt="背景图片" />
 
         </div>
-        <div className="move" ref={move_Ref} 
+        <div className="move"  ref={move_Ref} 
           style={{
           fontFamily: "Smiley Sans Oblique",
           background: "linear-gradient(to right,  #4368ff, #efceff)",
@@ -60,7 +60,7 @@ function App() {
         }}>
           <div style={{ fontSize: "80px", color: "rgba(255, 255, 255, 0.9)" }}>游 戏 账 号</div>
           <div style={{ fontSize: "110px" ,background: "linear-gradient(to right,  #4368ff, #efceff)",
-          WebkitBackgroundClip: "text",color: "transparent", }} >交 易 助 手</div>
+          WebkitBackgroundClip: "text",color: "transparent", }} >推 荐 助 手</div>
           <div>
           <GradientButton onClick={() => {
             set_show_chat(true);

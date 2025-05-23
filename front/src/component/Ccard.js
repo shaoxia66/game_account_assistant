@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Card.module.css'; // 假设你使用 CSS Modules
 
-export const Ccard = ({ imageUrl, title, subtitle,in_search=true,helf=""}) => {
+export const Ccard = ({ imageUrl, title, subtitle,current_state="评估中",helf=""}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false); // 用于进入动画
   useEffect(() => {
@@ -23,7 +23,7 @@ export const Ccard = ({ imageUrl, title, subtitle,in_search=true,helf=""}) => {
 
   return (
     <div
-      className={`${styles.card} ${isVisible ? styles.appear : ''}  ${in_search ? styles.rotating : ''}`} // 应用进入动画类
+      className={`${styles.card} ${isVisible ? styles.appear : ''}  ${current_state==="评估中" ? styles.rotating : ''}`} // 应用进入动画类
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
