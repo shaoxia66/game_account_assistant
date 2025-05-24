@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Card.module.css'; // 假设你使用 CSS Modules
 
-export const Ccard = ({ imageUrl, title, subtitle,current_state="评估中",helf=""}) => {
+export const Ccard = ({ imageUrl, title, subtitle,current_state="评估中",helf="",price}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false); // 用于进入动画
   useEffect(() => {
@@ -41,7 +41,11 @@ export const Ccard = ({ imageUrl, title, subtitle,current_state="评估中",helf
         />
       </div>
       <div className={styles.cardContent}>
-        <h3 className={styles.cardTitle}>{title}</h3>
+        <p className={styles.cardTitle}>{"价格："+price}</p>
+        {/* <div className={styles.cardState}>{current_state}</div> */}
+        {/* <h3 className={styles.cardTitle}>{title}</h3> */}
+        {/* <p className={styles.cardSubtitle}>{subtitle}</p> */}
+        <p className={styles.cardTitle}>{title}</p>
         <p className={styles.cardSubtitle}>{subtitle}</p>
       </div>
     </div>

@@ -25,7 +25,7 @@ env/
 venv/
 .pytest_cache/
 .DS_Store
-
+.logs
 # 编辑器特定文件
 .idea/
 .vscode/

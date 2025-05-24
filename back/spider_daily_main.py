@@ -1,8 +1,8 @@
-from database.Cmongo import DBOperation
+from spider.database.Cmongo import DBOperation
 from datetime import datetime
 import logging
 from logging.handlers import TimedRotatingFileHandler
-from pzds.get_data import Pzds_spider
+from spider.pzds.get_data import Pzds_spider
 import asyncio
 import os
 
@@ -27,6 +27,7 @@ async def  main():
     finally:
         db_pzds.close()
         db_px.close()
+    # print("开始执行 每日采集任务")
 
 if  __name__ == "__main__":
     asyncio.run(main())

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from database.Cmongo import DBOperation
+from spider.database.Cmongo import DBOperation
 import logging
 import os
 class Spider_base(ABC):

@@ -8,8 +8,7 @@ import { Spin } from '@arco-design/web-react';
 
 export const FrostedWindow = ({ set_show_chat }) => {
     const [input_value, set_input_value] = React.useState("");
-    const [card_list, set_card_list] = React.useState([<Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />]);
+    const [card_list, set_card_list] = React.useState([]);
     // const containerStyle = {
 
     //     height: '90vh',
@@ -101,7 +100,7 @@ export const FrostedWindow = ({ set_show_chat }) => {
         <div style={containerStyle}>
             <div style={contentStyle}>
                 <div className='content' style={{ width: '100%', height: '88%', overflow: 'auto', }}>
-                    <h1 style={{margin:"0px" ,color: '#4368ff', textAlign: 'center' }}>账号助手</h1>
+                    <h1 style={{ margin: "0px", color: '#4368ff', textAlign: 'center' }}>账号助手</h1>
                     {/* <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
                     } title={"账号助手"} subtitle={"账号助手"} />
                     <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
@@ -162,13 +161,30 @@ export const FrostedWindow = ({ set_show_chat }) => {
                                     return;
                                 }
                                 // 发送请求
-                                console.log("正在发送请求...");
+
                                 set_input_value("");
                                 set_card_list([]);
+
+                                fetch(`http://localhost:8000/chat?query=${input_value}`, {
+                                    method: 'get',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    }
+                                }).then(response => response.json())
+                                    .then(data => {
+                                        console.log("=------------------------------------")
+                                        const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+                                        console.log(parsedData)
+                                        set_card_list(parsedData["data"]["records"].map((item, index) => {
+                                            return <Ccard imageUrl={item.goodsImg}
+                                                title={item.title} subtitle={item.simpleMessage} current_state={"已完成"} helf={"https://www.pzds.com/goodsDetails/" + item.goodsNo + "/6" } price={item.price}/>
+                                        }
+                                        ));
+                                    });
                             }}
                         > 查询
                         </Button>
-                        
+
                     </div>
 
                 </div>

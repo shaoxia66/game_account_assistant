@@ -4,19 +4,19 @@ import execjs
 import aiohttp
 import asyncio
 import os
-from core.base import Spider_base
-from models.daily import DailyModel
+from spider.core.base import Spider_base
+from spider.models.daily import DailyModel
 
 class Pzds_spider(Spider_base):
     def __init__(self, db,game_id:int):
         self._game_id = game_id
         super().__init__(db)
         try:
-            with open(os.path.join("backend","spider","pzds","tt.js"), "r", encoding="utf-8") as f:
+            with open(os.path.join("back","spider","pzds","tt.js"), "r", encoding="utf-8") as f:
                 js_code = f.read()
                 self._ctx_sign = execjs.compile(js_code)
 
-            with open(os.path.join("backend","spider","pzds","decode_1174.js"), "r", encoding="utf-8") as f:
+            with open(os.path.join("back","spider","pzds","decode_1174.js"), "r", encoding="utf-8") as f:
                 js_code = f.read()
                 self._ctx_decode_1174= execjs.compile(js_code)
         except Exception as e:
@@ -24,7 +24,7 @@ class Pzds_spider(Spider_base):
             raise e
 
 
-    async def get_search(self):
+    async def get_search(self,dic:dict) -> dict:
         cookies = {
         "_c_WBKFRo": "X4MRamkS7Oscjhm7HnkWZJhmAFEizHn5gs51zXON",
         "sensorsdata2015jssdkcross": "%7B%22distinct_id%22%3A%2219651d021d210a-01f52f2060a410a-26011c51-1638720-19651d021d31af7%22%2C%22first_id%22%3A%22%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTk2NTFkMDIxZDIxMGEtMDFmNTJmMjA2MGE0MTBhLTI2MDExYzUxLTE2Mzg3MjAtMTk2NTFkMDIxZDMxYWY3In0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%22%2C%22value%22%3A%22%22%7D%7D",
@@ -42,7 +42,7 @@ class Pzds_spider(Spider_base):
         "order": "DESC",
         "sort": "onStandTime",
         "page": 1,
-        "pageSize": 21,#每页数量 21为20个
+        "pageSize": 21,#每页数量 第一页都一个一般是广告
         "action": {
             "gameId": self._game_id,
             "goodsCatalogueId": 6,
@@ -51,7 +51,8 @@ class Pzds_spider(Spider_base):
             "searchWords": [],
             "searchPropertyIds": [],
             "unionGameIds": [],
-            "goodsSearchActions": []
+            "goodsSearchActions": [],
+            **dic
         }
     }
         data = json.dumps(data, separators=(',', ':'))
@@ -93,10 +94,11 @@ class Pzds_spider(Spider_base):
             async with session.post(url, cookies=cookies,headers=headers, params=params,data=data) as response:
                 if response.status == 200:
                     result = await response.json()
-                    print(result)
+                    return result
                     # self._logger.info(f"爬取成功")
                 else:
                     self._logger.error(f"爬取失败{response.status}",)
+        return {}
 
 
     async def get_all_transaction_records(self,witer = False,sleep_time=1):
