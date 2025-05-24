@@ -16,3 +16,7 @@ class GoodsModel(BaseModel):
 #     url: int = Field(...,description="显示图片的url")
 #     price: float = Field(...,description="价格")
 #     data: List[DailyModel] = Field(description="返回的数据",default=[])
+
+class Assess_lv(BaseModel):
+    assess:Literal["很差 *","一般 **","还行 ***","良好 ****","优秀 *****","极品 ******"] =  Field(..., description="推荐购买的等级，越高性价比就越高")
+    

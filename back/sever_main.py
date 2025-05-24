@@ -9,10 +9,12 @@ import re
 import asyncio
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langfuse.callback import CallbackHandler
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import PydanticOutputParser
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+from deal_mcp.models import Assess_lv
+
 
 app = FastAPI()
 app.add_middleware(
@@ -32,6 +34,8 @@ client = MultiServerMCPClient(
     )
 
 
+
+
 chat=ChatOpenAI(
     model=os.getenv("NIM_MODEL"),
     temperature=0.6,
@@ -45,6 +49,30 @@ chat=ChatOpenAI(
 #     api_key="sk-8a8f980a44464ddb9e782bc5257abdd6",
 #     base_url="https://api.deepseek.com",
 # )
+@app.get("/assess")
+async def assess(metadata: str):
+    handler = CallbackHandler(
+    session_id="test",
+    tags=["assess"]
+    )
+    output_parser = PydanticOutputParser(pydantic_object=Assess_lv)
+    format_instructions = output_parser.get_format_instructions()
+    system_message = f"你是一个账号购买的评估大师。你会根据账号价格和其他信息，给出账号的评估结果是否值得购买。输出的结构为 {format_instructions}"
+    user_message = metadata
+
+    messages = [
+        SystemMessage(content=system_message),
+        HumanMessage(content=user_message),
+        ]
+    chain = chat | output_parser
+    print(chain)
+    try:
+        return await chain.ainvoke(messages,config={"callbacks":[handler]})
+
+    except Exception as e:
+        return await chain.ainvoke(messages,config={"callbacks":[handler]})
+    
+
 @app.get("/chat")
 async def goods_info(query: str):
     tools = await client.get_tools()

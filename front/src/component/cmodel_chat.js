@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Ccard } from './Ccard.js';
 import { Input } from '@lobehub/ui';
 import { Button } from '@lobehub/ui';
 import * as BookOpenCheck from 'lucide-react';
-import { Spin } from '@arco-design/web-react';
-
-
+import { useRef } from 'react';
+import './cmodel_chat.css';
 export const FrostedWindow = ({ set_show_chat }) => {
     const [input_value, set_input_value] = React.useState("");
     const [card_list, set_card_list] = React.useState([]);
+    const goods_infos=useRef([]);
+    const [loading, setLoading] = React.useState(0);
+    const load_element = <div class="pl">
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__dot"></div>
+	<div class="pl__text">Loading…</div>
+</div>
     // const containerStyle = {
 
     //     height: '90vh',
@@ -100,28 +116,12 @@ export const FrostedWindow = ({ set_show_chat }) => {
         <div style={containerStyle}>
             <div style={contentStyle}>
                 <div className='content' style={{ width: '100%', height: '88%', overflow: 'auto', }}>
-                    <h1 style={{ margin: "0px", color: '#4368ff', textAlign: 'center' }}>账号助手</h1>
-                    {/* <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} in_search={false} helf='https://www.pzds.com/goodsDetails/TD2W2X/6' />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} />
-                    <Ccard imageUrl={"https://pzdsoss.pzds.com/c/2/goods/cover/20250506/tools_U2bmdNrL_1746531513966.jpg?x-oss-process=style/titleImg"
-                    } title={"账号助手"} subtitle={"账号助手"} /> */}
-                    {card_list}
+                    <h1 style={{ margin: "0px", color: '#000000', textAlign: 'center' }}>账号助手</h1>
+                    {loading===1 && load_element}
+                    {loading===2 && card_list}
+
+                    
                 </div>
-                <Spin dot={true} />
                 <div className='input_box' style={{ width: '100%', height: '10%' }}>
                     <div style={{
                         display: 'flex',
@@ -137,7 +137,7 @@ export const FrostedWindow = ({ set_show_chat }) => {
                             shadow={true}
                             variant="filled"
                             style={{
-                                color: '#4368ff',
+                                color: '#000000',
                                 width: '80%',
                             }}
                             value={input_value}
@@ -164,7 +164,7 @@ export const FrostedWindow = ({ set_show_chat }) => {
 
                                 set_input_value("");
                                 set_card_list([]);
-
+                                setLoading(1);
                                 fetch(`http://localhost:8000/chat?query=${input_value}`, {
                                     method: 'get',
                                     headers: {
@@ -173,11 +173,12 @@ export const FrostedWindow = ({ set_show_chat }) => {
                                 }).then(response => response.json())
                                     .then(data => {
                                         console.log("=------------------------------------")
+                                        setLoading(2);
                                         const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
-                                        console.log(parsedData)
+                                        goods_infos.current = parsedData["data"]["records"];
                                         set_card_list(parsedData["data"]["records"].map((item, index) => {
-                                            return <Ccard imageUrl={item.goodsImg}
-                                                title={item.title} subtitle={item.simpleMessage} current_state={"已完成"} helf={"https://www.pzds.com/goodsDetails/" + item.goodsNo + "/6" } price={item.price}/>
+                                            return <Ccard imageUrl={item.goodsImg} metadata={item}
+                                                title={item.title} subtitle={item.simpleMessage}  helf={"https://www.pzds.com/goodsDetails/" + item.goodsNo + "/6" } price={item.price}/>
                                         }
                                         ));
                                     });
