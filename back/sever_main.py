@@ -110,8 +110,6 @@ async def goods_info(query: str):
         print("TOOLCALL:", tool_result)
         return tool_result
     elif (hasattr(response, "tool_calls") and response.tool_calls):
-        # print("response.tool_calls type:", type(response.tool_calls))
-        # print("response type:", type(response))
     # 7. 执行所有工具调用，生成对应的 ToolMessage
         for tool_call in response.tool_calls:
              tool_name = tool_call["name"].lower()
