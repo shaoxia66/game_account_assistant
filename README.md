@@ -23,7 +23,7 @@
   - React 18 + Ant Design 组件库
   - CSS Modules 动画交互系统
   - ![界面一](img/jm1.jpg)
-  - ![界面一](img/jm2.jpg)
+  - ![界面二](img/jm2.png)
 - **核心功能**:
   - 可视化账号推荐列表
   - 多维度筛选面板
