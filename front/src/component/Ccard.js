@@ -61,7 +61,7 @@ export const Ccard = ({ imageUrl, title, subtitle,  helf = "", price, metadata }
         {/* <p className={styles.cardSubtitle}>{subtitle}</p> */}
         <p className={styles.cardSubtitle}>{title}</p>
         <p className={styles.cardSubtitle}>{subtitle}</p>
-        <p className={styles.cardSubtitle}>{current_state}</p>
+        <p className={styles.cardTitle}>{current_state}</p>
       </div>
     </div>
   );
