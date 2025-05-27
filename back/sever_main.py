@@ -43,12 +43,7 @@ chat=ChatOpenAI(
     base_url=os.getenv("NIM_HOST"),
 )
 
-# chat=ChatOpenAI(
-#     model="deepseek-chat",
-#     temperature=0.6,
-#     api_key="sk-8a8f980a44464ddb9e782bc5257abdd6",
-#     base_url="https://api.deepseek.com",
-# )
+
 @app.get("/assess")
 async def assess(metadata: str):
     handler = CallbackHandler(
